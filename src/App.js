@@ -9,6 +9,7 @@ import {
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Home from './component/Home';
+import Pagination from './component/Pagination';
 
 
 
@@ -17,7 +18,7 @@ function App() {
   return (
     <div className="App">
     <QueryClientProvider client={queryClient}>
-      <Home/>
+      <Pagination/>
       <ReactQueryDevtools  initialIsOpen/>
     </QueryClientProvider>
     
