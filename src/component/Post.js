@@ -1,25 +1,41 @@
 import React from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 
-const fetchpost=(id)=>{
-    console.log("axios running",id)
-    return axios.get(`https://jsonplaceholder.typicode.com/todos/${id}`)
+
+const fetchpost1=(id)=>{
+  return axios.get(`https://jsonplaceholder.typicode.com/todos/${id}`)
 }
 
 const Post = () => {
-   const {id}=useParams()
-   const pageid=parseInt(id)
-   
-   const{data,isLoading,error,isError}=useQuery(['posts',pageid],()=>fetchpost(pageid))
-   console.log(data)
-  return (
+    const { id } = useParams();
+    const individualId = parseInt(id)
+    console.log(individualId)
+      
+  
+   const{data,isLoading,error,isError} = useQuery(["todo",id],async()=>fetchpost1(id))
+
+    
+  
+  
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
+  
+   return (
     <div className="container">
-        <p>userid: {data.data.userId}</p>
-        <p>title: {data.data.title}</p> 
-        <button>submit</button> 
+      <input type="text" defaultValue={data.data.id} disabled/>
+      <br />
+        <input type="text" defaultValue={data.data.title} />
+      <br />
+      <button>Update</button>
+       
     </div>
   )
 }
